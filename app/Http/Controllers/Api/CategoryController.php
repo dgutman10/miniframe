@@ -7,6 +7,7 @@ namespace app\Http\Controllers\Api;
 use App\Http\JsonResponse;
 use App\Http\Request;
 use App\Http\ResponseInterface;
+use App\Model\Category;
 
 class CategoryController
 {
@@ -16,6 +17,9 @@ class CategoryController
      */
     public function index(Request $request)
     {
-        return JsonResponse::create("categories", 200);
+        /** @var Category $categories */
+        $categories = app()->make(Category::class);
+
+        return JsonResponse::create($categories->getAll(), 200);
     }
 }

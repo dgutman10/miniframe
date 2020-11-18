@@ -26,10 +26,10 @@ class MigrateCommand extends Command
         try {
             $this->createDatabase($output);
             $this->createTables($output);
+            $this->addSampleData($output);
 
             return Command::SUCCESS;
         } catch (\Exception $exception) {
-
             return Command::FAILURE;
         }
     }
@@ -78,5 +78,27 @@ class MigrateCommand extends Command
               CONSTRAINT products FOREIGN KEY (categoria) REFERENCES categories (id)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
+    }
+
+    public function addSampleData($output)
+    {
+        $output->writeln("<info>Agregando datos de ejemplo</info>");
+        $faker = \Faker\Factory::create();
+
+        for ($i=0; $i<10; $i++) {
+            $this->connection->exec("INSERT INTO categories (nombre) VALUES ('{$faker->colorName}')");
+        }
+
+        for ($i=0; $i<10; $i++) {
+            $nombre = $faker->unique()->name;
+            $categoria = $faker->numberBetween(1,10);
+            $precio = 10;
+            $imagen = $faker->imageUrl();
+            $sku = $faker->numberBetween(1000,2000);
+
+            $this->connection->exec("
+                INSERT INTO products (nombre, categoria, precio, imagen_url, sku) 
+                VALUES ('{$nombre}', '{$categoria}', '{$precio}', '{$imagen}', '{$sku}')");
+        }
     }
 }
