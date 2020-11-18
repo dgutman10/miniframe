@@ -1,0 +1,22 @@
+{
+    "name": "diego/middleware",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Diego Gutman",
+            "email": "dgutman@lyracons.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "helpers/helpers.php"
+        ]
+    },
+    "require": {
+        "symfony/console": "^5.1",
+        "ext-pdo": "*"
+    }
+}
