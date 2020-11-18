@@ -55,7 +55,7 @@ class Request implements RequestInterface
     public function handle()
     {
         switch (true) {
-            case ($_SERVER['REQUEST_URI'] == "/catalog/products" && $_SERVER['REQUEST_METHOD'] == "GET"):
+            case (preg_match("/catalog\/products\/*/", $_SERVER['REQUEST_URI'])  && $_SERVER['REQUEST_METHOD'] == "GET"):
                 return app()->make(ProductController::class)->index($this);
             case ($_SERVER['REQUEST_URI'] == "/catalog/products/create" && $_SERVER['REQUEST_METHOD'] == "POST"):
                 return app()->make(ProductController::class)->create($this);

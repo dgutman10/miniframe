@@ -61,6 +61,10 @@ class Repository implements RepositoryInterface
             : "*";
     }
 
+    /**
+     * @param array $filters
+     * @return string
+     */
     public function stringifyFilters(array $filters)
     {
         $string = "";
